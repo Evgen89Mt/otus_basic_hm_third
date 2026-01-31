@@ -3,7 +3,7 @@
 
 иерархия папок проекта
 
-'''
+```
 CMakeLists.txt
 src/
     CMakelists.txt
@@ -17,5 +17,5 @@ lib/
             wr_file.h
         src/
             wr_file.cpp
-'''
+```
         
