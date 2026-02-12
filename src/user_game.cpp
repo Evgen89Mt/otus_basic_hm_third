@@ -20,9 +20,14 @@ void User_game::start(){
     view_result();
 
     if(!save_scores()){
-        std::cout << "Error, can't save to file."<<std::endl;
+        std::cout << "Error, can't save to file." << std::endl;
     }
 
+    if(!read_scores()){
+        std::cout << "Error, can't read file." << std::endl;
+    }
+
+    view_scores();
 }
 
 bool User_game::set_random_number(){
@@ -91,11 +96,19 @@ bool User_game::game(){
 bool User_game::save_scores(){
 
     WriteReadFile wr;
-    std::string count;
-    count += m_count;       // error
-    //count = {m_count};
+    std::string count = std::to_string(m_count);
 
     if(!wr.writeToFile_user(m_name_file, m_name, count)){
+        return false;
+    }
+
+    return true;
+}
+
+bool User_game::read_scores(){
+    WriteReadFile wr;
+    
+    if(!wr.readFromFile_user(m_name_file, m_high_scores_file)){
         return false;
     }
 
@@ -110,5 +123,13 @@ void User_game::view_result(){
 }
 
 void User_game::view_scores(){
+    if(m_high_scores_file.empty()){
+        std::cout << "[User_game::view_scores] Error, container (vector) is empty." << std::endl;
+        return;
+    }
 
+    std::cout << "-------------------------------------------------------"<<std::endl;
+    for(const auto str: m_high_scores_file){
+        std::cout << str << std::endl;
+    }
 }

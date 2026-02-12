@@ -25,14 +25,14 @@ bool WriteReadFile::writeToFile_user(std::string& file, std::string& name, std::
     fout << str;
     fout << std::endl;
 
-    std::cout << "save date is success!!" << std::endl;
+    //std::cout << "save date is success!!" << std::endl;
 
     return true;
 }
 
-bool WriteReadFile::readFromFile_user(std::string& file, std::string& date){
+bool WriteReadFile::readFromFile_user(std::string& file, std::vector<std::string>& date){
     if(file.empty()){
-        std::cout << "[WriteReadFile::writeToFile_user] Error: string file is empty." << std::endl;
+        std::cout << "[WriteReadFile::readFromFile_user] Error: string file is empty." << std::endl;
         return false;
     }
 
@@ -43,12 +43,19 @@ bool WriteReadFile::readFromFile_user(std::string& file, std::string& date){
         std::cout << std::boolalpha << "file is not open, status >> " << fin.is_open() << std::endl;
         return false;
     }
-    std::string line, str_write;
+
+    std::string line;
 
     for(; std::getline(fin, line);){
-        str_write +=line;
-        str_write += '\n';
+        date.push_back(line);
     }
+
+    if(date.empty()){
+        std::cout << "[WriteReadFile::readFromFile_user] Error, container (vector) is empty." << std::endl;
+        return false;
+    }
+
+    std::cout << "!! read from file." << std::endl;
     
     return true;
 }

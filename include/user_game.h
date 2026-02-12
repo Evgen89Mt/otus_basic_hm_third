@@ -28,11 +28,11 @@ class User_game{
         std::string command{""};                            // строка команда в начало игры или или
         std::string m_name{"noname"};                       // имя
         std::string m_name_file{"high_scores.txt"};         // имя файла
-        int m_count{-1};                                      // количество попыток
+        int m_count{-1};                                    // количество попыток
         int m_kf{100};                                      // коэф сложности
         int m_value_ramdom;                                 // число для угадывания
 
-       // std::vector<std::string, int> m_high_scores_file;   // результат, все игроки и их попытки
+        std::vector<std::string> m_high_scores_file;        // результат, все игроки и их попытки
 
     public:
         void start();
@@ -43,6 +43,7 @@ class User_game{
         void set_name_user();
         bool game();
         bool save_scores();
+        bool read_scores();
         void view_result();
         void view_scores();
 };
