@@ -21,12 +21,14 @@
 #include <cstdlib>
 #include <ctime>
 
+#include "wr_file.h"
+
 class User_game{
     private:
         std::string command{""};                            // строка команда в начало игры или или
         std::string m_name{"noname"};                       // имя
         std::string m_name_file{"high_scores.txt"};         // имя файла
-        int count{-1};                                      // количество попыток
+        int m_count{-1};                                      // количество попыток
         int m_kf{100};                                      // коэф сложности
         int m_value_ramdom;                                 // число для угадывания
 
@@ -41,5 +43,6 @@ class User_game{
         void set_name_user();
         bool game();
         bool save_scores();
+        void view_result();
         void view_scores();
 };

@@ -19,10 +19,13 @@ bool WriteReadFile::writeToFile_user(std::string& file, std::string& name, std::
         return false;
     }
 
+
     fout << name;
     fout << " ";
     fout << str;
     fout << std::endl;
+
+    std::cout << "save date is success!!" << std::endl;
 
     return true;
 }
