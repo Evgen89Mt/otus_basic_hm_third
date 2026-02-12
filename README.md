@@ -7,9 +7,10 @@
 CMakeLists.txt
 src/
     CMakelists.txt
-    hw.cpp
+    user_game.cpp
+    hw.cpp  //main
 include/
-    hw.h
+    user_game.h
 lib/
     wr_file/
         CMakeLists.txt
