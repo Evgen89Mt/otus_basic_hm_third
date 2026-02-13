@@ -33,6 +33,7 @@ class User_game{
         int m_value_ramdom;                                 // число для угадывания
 
         std::vector<std::string> m_high_scores_file;        // результат, все игроки и их попытки
+        std::vector<std::pair<std::string, int>> m_result;  // подготовленный контейнер с результатами
 
     public:
         void start();
@@ -46,4 +47,24 @@ class User_game{
         bool read_scores();
         void view_result();
         void view_scores();
+
+        std::pair<std::string, std::string> parsingString(
+            std::string& string
+            , char split_token
+        );
+
+        // В итоге разбить работу на три части
+        //1. Складываем строки в вектор
+        //2. Разбиваем на слова
+        //3. Проверяем на число слова конвертируем в int 
+        //4. Формируем pair
+        std::vector<std::string> parsingLine(
+            std::string line
+            , char split_token
+        );
+
+        std::vector<std::pair<std::string, int>> set_high_scores_container(std::string& word);
+        int isDigit(std::string& word);
+
+        
 };

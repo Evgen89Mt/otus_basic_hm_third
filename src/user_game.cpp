@@ -133,3 +133,85 @@ void User_game::view_scores(){
         std::cout << str << std::endl;
     }
 }
+
+
+
+std::pair<std::string, std::string> User_game::parsingString(
+    std::string& string
+    , char split_token = ' '){
+                
+    if(string.empty()){
+        std::cout << "[User_game::parsingString]Error: string is empty." << std::endl;
+        return std::pair<std::string, std::string>{};
+    }
+    std::pair<std::string, std::string> pair_tmp;
+
+    //iterator string (обход по символам до конца строки nullptr)
+    for(auto it  = string.begin(); it < string.end(); it++){
+
+        //если я не пустое место, то собираю слово...
+        // if(*it != split_token){
+            std::string temp;
+            //делаем копию итератора для обхода слова
+            std::string::iterator it_j = it;
+            // включаем цикл до спита
+            for(;it_j < string.end() && *it_j != split_token; it_j++){
+                temp +=*it_j;
+            }
+            pair_tmp.first = temp;
+            temp.clear();
+
+            for(;it_j < string.end() && *it_j != split_token; it_j++){
+                temp +=*it_j;
+            }
+            pair_tmp.second = temp;
+        // }
+    }
+
+    if(pair_tmp.first.empty() || pair_tmp.second.empty()){
+        std::cout << "[]";
+    }
+
+    return pair_tmp;
+}
+
+std::vector<std::string> User_game::parsingLine(
+    std::string line
+    , char split_token = ' '
+){
+    if(line.empty()){
+        std::cout << "[User_game::parsingLine]Error: string is empty." << std::endl;
+        return std::vector<std::string>{""};
+    }
+
+    std::vector<std::string> temp_vec;
+
+    //TO DO
+
+    return temp_vec;
+}
+
+std::vector<std::pair<std::string, int>> User_game::set_high_scores_container(std::string& word){
+
+    if(word.empty()){
+        std::cout << "[User_game::set_high_scores_container]Error: string is empty." << std::endl;
+        return std::vector<std::pair<std::string, int>>{};
+    }
+
+    std::vector<std::pair<std::string, int>> temp_vec;
+
+    //TO DO
+
+    return temp_vec;
+}
+
+int User_game::isDigit(std::string& word){
+    if(word.empty()){
+        std::cout << "[User_game::isDigit]Error: string is empty." << std::endl;
+        return -1;
+    }
+
+    //TO DO
+
+    return 1;
+}
