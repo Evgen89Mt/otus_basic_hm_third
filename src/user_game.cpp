@@ -17,7 +17,6 @@ void User_game::start(){
     }
 
     game();
-    view_result();
 
     if(!save_scores()){
         std::cout << "Error, can't save to file." << std::endl;
@@ -25,9 +24,25 @@ void User_game::start(){
 
     if(!read_scores()){
         std::cout << "Error, can't read file." << std::endl;
+        return;
     }
 
-    view_scores();
+
+    if(!read_lines(m_read_line)){
+        std::cout << "Error, can't read lines." << std::endl;
+        return;
+    }
+
+
+    m_result = set_high_scores_container(m_words);
+
+    if(m_result.empty()){
+        std::cout << "Container result is empty." << std::endl;
+    }
+    
+    if(!m_result.empty()){
+        view_result();
+    }
 }
 
 bool User_game::set_random_number(){
@@ -108,76 +123,66 @@ bool User_game::save_scores(){
 bool User_game::read_scores(){
     WriteReadFile wr;
     
-    if(!wr.readFromFile_user(m_name_file, m_high_scores_file)){
+    if(!wr.readFromFile_user(m_name_file, m_read_line)){
         return false;
     }
 
     return true;
 }
 
+bool User_game::read_lines(std::vector<std::string>& lines){
+    if(lines.empty()){
+        std::cout << "[User_game::read_lines]Error: container (vector) is empty." << std::endl;
+        return false; 
+    }
+
+    std::vector<std::string> temp;
+
+    for(auto it = lines.begin(); it != lines.end(); it++){
+        temp = parsingLine(*it);
+        if(!temp.empty()){
+
+            for(auto it_temp = temp.begin(); it_temp != temp.end(); it_temp++){
+
+                if(!(*it_temp).empty()){
+                    m_words.push_back(*it_temp);
+                }
+
+            }
+
+        }
+        temp.clear();
+    }
+
+
+    return true;
+}
+
 void User_game::view_result(){
 
-    std::cout << "Total result:"<<std::endl;
-    std::cout << "name: " << m_name <<std::endl;
-    std::cout << "count: " << m_count << std::endl;
+    std::cout << "_________________result_total__________________" << std::endl;
+
+    for(auto pair = m_result.begin(); pair != m_result.end(); pair++){
+
+        std::cout << "name: " << (*pair).first << " count: " << (*pair).second << std::endl;
+    }
 }
 
 void User_game::view_scores(){
-    if(m_high_scores_file.empty()){
+    if(m_words.empty()){
         std::cout << "[User_game::view_scores] Error, container (vector) is empty." << std::endl;
         return;
     }
 
     std::cout << "-------------------------------------------------------"<<std::endl;
-    for(const auto str: m_high_scores_file){
+    for(const auto str: m_words){
         std::cout << str << std::endl;
     }
 }
 
-
-
-std::pair<std::string, std::string> User_game::parsingString(
-    std::string& string
-    , char split_token = ' '){
-                
-    if(string.empty()){
-        std::cout << "[User_game::parsingString]Error: string is empty." << std::endl;
-        return std::pair<std::string, std::string>{};
-    }
-    std::pair<std::string, std::string> pair_tmp;
-
-    //iterator string (обход по символам до конца строки nullptr)
-    for(auto it  = string.begin(); it < string.end(); it++){
-
-        //если я не пустое место, то собираю слово...
-        // if(*it != split_token){
-            std::string temp;
-            //делаем копию итератора для обхода слова
-            std::string::iterator it_j = it;
-            // включаем цикл до спита
-            for(;it_j < string.end() && *it_j != split_token; it_j++){
-                temp +=*it_j;
-            }
-            pair_tmp.first = temp;
-            temp.clear();
-
-            for(;it_j < string.end() && *it_j != split_token; it_j++){
-                temp +=*it_j;
-            }
-            pair_tmp.second = temp;
-        // }
-    }
-
-    if(pair_tmp.first.empty() || pair_tmp.second.empty()){
-        std::cout << "[]";
-    }
-
-    return pair_tmp;
-}
-
 std::vector<std::string> User_game::parsingLine(
-    std::string line
-    , char split_token = ' '
+    std::string& line
+    , char split_token
 ){
     if(line.empty()){
         std::cout << "[User_game::parsingLine]Error: string is empty." << std::endl;
@@ -185,22 +190,65 @@ std::vector<std::string> User_game::parsingLine(
     }
 
     std::vector<std::string> temp_vec;
+    std::string temp;
 
-    //TO DO
+    for(auto it = line.begin(); it != line.end(); it++){
+
+        if(*it == split_token){
+            if(!temp.empty()){
+                temp_vec.push_back(temp);
+                temp.clear();
+            }
+        }
+        else{
+            temp += *it;
+        }
+    }
+
+    if(!temp.empty()){
+        temp_vec.push_back(temp);
+    }
+
+    std::cout << "lines >> " << temp_vec.size() << std::endl; 
 
     return temp_vec;
 }
 
-std::vector<std::pair<std::string, int>> User_game::set_high_scores_container(std::string& word){
+std::vector<std::pair<std::string, int>> User_game::set_high_scores_container(
+    std::vector<std::string>& words){
 
-    if(word.empty()){
-        std::cout << "[User_game::set_high_scores_container]Error: string is empty." << std::endl;
+    if(words.empty()){
+        std::cout << "[User_game::set_high_scores_container]Error: (vector)container strings is empty." << std::endl;
         return std::vector<std::pair<std::string, int>>{};
     }
 
     std::vector<std::pair<std::string, int>> temp_vec;
+    std::pair <std::string, int> temp_pair;
+    std::string name, count;
 
-    //TO DO
+    for(auto it = words.begin(); it != words.end(); it++){
+
+        int num = isDigit(*it);
+        
+        if(num >= 0){
+            count += *it;
+        }
+        else{
+            name += *it;
+        }
+        
+        if(!name.empty() && !count.empty()){
+        
+            temp_pair.first = name;
+            temp_pair.second = std::stoi(count);
+        
+            temp_vec.push_back(temp_pair);
+        
+            temp_pair = {};
+            name.clear(); 
+            count.clear();
+        }
+    }
 
     return temp_vec;
 }
@@ -211,7 +259,17 @@ int User_game::isDigit(std::string& word){
         return -1;
     }
 
-    //TO DO
+    std::string temp;
 
-    return 1;
+    for(auto it = word.begin(); it != word.end(); it++){
+        if(std::isdigit(*it)){
+            temp.push_back(*it);
+        }
+    }
+
+    if(!temp.empty()){
+        return std::stoi(temp);
+    }
+
+    return -1;
 }
