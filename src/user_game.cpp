@@ -7,7 +7,7 @@ void User_game::start(){
     std::cout << std::endl;
 
     std::cout << "Enter koeff diferend >> ";
-    if(!set_random_number()){
+    if(!set_difficulty_game()){
         std::cout << "koeff [100]" << std::endl;
     }
 
@@ -45,7 +45,7 @@ void User_game::start(){
     }
 }
 
-bool User_game::set_random_number(){
+bool User_game::set_difficulty_game(){
     int koef_temp{-1};
 
     std::cin >> koef_temp;
@@ -273,3 +273,71 @@ int User_game::isDigit(std::string& word){
 
     return -1;
 }
+
+bool User_game::init_command(){
+    static const std::pair<std::string
+    , bool (User_game::*method)(std::vector<std::string>&)> command_init[] = 
+    {
+      {"-max",   &User_game::executeDifficultyGameCommand}
+    , {"-table", &User_game::executeTableCommand}
+    , {"-level", &User_game::executeDifficultyLevelCommand}
+    // , {"-level",   &User_game::executeDifficultyGameCommand} // как вариант
+    };
+
+    for(const auto& init: command_init){
+        Command cmd;
+        cmd.name = init.first;
+        cmd.method = init.second;
+
+        m_commnds.push_back(cmd);
+    }
+
+    return true;
+}
+
+Command* User_game::findCommand(std::string& command_name){
+    if(command_name.empty()){
+        std::cout << "[User_game::findCommand]Error: string is empty." << std::endl;
+        return nullptr;
+    }
+
+    for(auto& cmd: m_commnds){
+        if(cmd.name == command_name){
+            return &cmd;
+        }
+    }
+
+    return nullptr;
+}
+
+// доп 1             
+bool User_game::executeDifficultyGameCommand(std::vector<std::string>& command){
+    if(command.empty()){
+        std::cout << "[User_game::executeDifficultyGameCommand] Error: container(vector) is empty." << std::endl;
+        return false;
+    }
+
+    //TODO
+
+    return true;
+}
+
+// доп.2 и 3
+bool User_game::executeTableCommand(std::vector<std::string>& command){
+    if(command.empty()){
+        std::cout << "[User_game::executeTableCommand] Error: container(vector) is empty." << std::endl;
+        return false;
+    }
+    //TODO
+    return true;
+}
+
+// доп 5
+bool User_game::executeDifficultyLevelCommand(std::vector<std::string>& command){
+    if(command.empty()){
+        std::cout << "[User_game::executeDifficultyLevelCommand] Error: container(vector) is empty." << std::endl;
+        return false;
+    }
+    //TODO
+    return true;
+}        
