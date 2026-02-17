@@ -275,13 +275,12 @@ int User_game::isDigit(std::string& word){
 }
 
 bool User_game::init_command(){
-    static const std::pair<std::string
-    , bool (User_game::*method)(std::vector<std::string>&)> command_init[] = 
+    static const 
+    std::pair<std::string, bool (User_game::*)(std::vector<std::string>&)>command_init[] = 
     {
       {"-max",   &User_game::executeDifficultyGameCommand}
     , {"-table", &User_game::executeTableCommand}
     , {"-level", &User_game::executeDifficultyLevelCommand}
-    // , {"-level",   &User_game::executeDifficultyGameCommand} // как вариант
     };
 
     for(const auto& init: command_init){
@@ -324,7 +323,7 @@ bool User_game::executeDifficultyGameCommand(std::vector<std::string>& command){
     
     std::string str_num = command[2];
 
-    if(str_num == nullptr){
+    if(str_num.empty()){
         std::cout << "[User_game::executeDifficultyGameCommand] Error: str_num is nullptr." << std::endl;
         return false;
     }
@@ -389,7 +388,7 @@ bool User_game::executeDifficultyLevelCommand(std::vector<std::string>& command)
     
     std::string str_num = command[2];
 
-    if(str_num == nullptr){
+    if(str_num.empty()){
         std::cout << "[User_game::executeDifficultyLevelCommand] Error: str_num is nullptr." << std::endl;
         return false;
     }
