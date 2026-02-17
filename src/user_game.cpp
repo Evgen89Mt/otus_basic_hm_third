@@ -6,7 +6,7 @@ void User_game::start(){
     set_name_user();
     std::cout << std::endl;
 
-    std::cout << "Enter koeff diferend >> ";
+    //std::cout << "Enter koeff diferend >> ";
     if(!set_random_number()){
         std::cout << "koeff [100]" << std::endl;
     }
@@ -46,8 +46,16 @@ void User_game::start(){
 }
 
 bool User_game::set_random_number(){
+    int kf;
+    
+    std::cout << "Enter koeff difficulty: ";
+    // std::cin >> kf;
+    //
+    // if(kf <= 0 || kf > 1000){
+    //     std::cout << "Error: koeff is standard 100.(check value kf): " << kf << std::endl;
+    //     return false;
+    // }
     int koef_temp{-1};
-
     std::cin >> koef_temp;
     for(;koef_temp <= 0 || koef_temp > 1000;){
         std::cout << "again enter koef >> ";
