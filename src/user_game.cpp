@@ -317,18 +317,61 @@ bool User_game::executeDifficultyGameCommand(std::vector<std::string>& command){
         return false;
     }
 
-    //TODO
+    if(command.size() < 3){
+        std::cout << "[User_game::executeDifficultyGameCommand] Error: container(vector) is bad size < 3." << std::endl;
+        return false;
+    }
+    
+    std::string str_num = command[2];
+
+    if(str_num == nullptr){
+        std::cout << "[User_game::executeDifficultyGameCommand] Error: str_num is nullptr." << std::endl;
+        return false;
+    }
+
+    int num = std::stoi(str_num);
+
+    if(num <= 0 || num > 1000){
+        std::cout << "[User_game::executeDifficultyGameCommand] Error: str_num is out of range." << std::endl;
+        return false;
+    }
+
+    m_kf = num;
 
     return true;
 }
 
-// доп.2 и 3
+// доп.2 вывод таблицы 
+// и 3 фильтр вывода таблицы лучшее результаты игрока
 bool User_game::executeTableCommand(std::vector<std::string>& command){
     if(command.empty()){
         std::cout << "[User_game::executeTableCommand] Error: container(vector) is empty." << std::endl;
         return false;
     }
-    //TODO
+   
+        if(!read_scores()){
+        std::cout << "[User_game::executeTableCommand] Error, can't read file." << std::endl;
+        return;
+    }
+
+
+    if(!read_lines(m_read_line)){
+        std::cout << "[User_game::executeTableCommand] Error, can't read lines." << std::endl;
+        return;
+    }
+
+    m_result = set_high_scores_container(m_words);
+
+    if(m_result.empty()){
+        std::cout << "[User_game::executeTableCommand] Container result is empty." << std::endl;
+    }
+
+    if(!m_result.empty()){
+        view_result();
+    }
+
+    // TODO top filter
+
     return true;
 }
 
@@ -338,6 +381,37 @@ bool User_game::executeDifficultyLevelCommand(std::vector<std::string>& command)
         std::cout << "[User_game::executeDifficultyLevelCommand] Error: container(vector) is empty." << std::endl;
         return false;
     }
-    //TODO
+
+    if(command.size() < 3){
+        std::cout << "[User_game::executeDifficultyLevelCommand] Error: container(vector) is bad size < 3." << std::endl;
+        return false;
+    }
+    
+    std::string str_num = command[2];
+
+    if(str_num == nullptr){
+        std::cout << "[User_game::executeDifficultyLevelCommand] Error: str_num is nullptr." << std::endl;
+        return false;
+    }
+
+    int num = std::stoi(str_num);
+
+    if(num < 1 || num > 3){
+        std::cout << "[User_game::executeDifficultyLevelCommand] Error: str_num is out of range." << std::endl;
+        return false;
+    }
+
+    switch(num){
+        case 1:
+            m_kf = 10;
+            break;
+        case 2:
+            m_kf = 100;
+            break;
+        case 3:
+            m_kf = 1000;
+            break;
+    }
+
     return true;
 }        
