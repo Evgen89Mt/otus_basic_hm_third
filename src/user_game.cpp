@@ -45,6 +45,40 @@ void User_game::start(){
     }
 }
 
+void User_game::start(std::vector<std::string>& command){
+    if(command.size() < 1){
+        std::cout << "++" << command.size() << std::endl;
+        start();
+        return;
+    }
+
+    m_vec_commands = command;
+
+    if(init_command()){
+        std::cout << "init commads" << std::endl;
+    }
+
+    Command *cmd = findCommand(m_vec_commands[0]);
+    if(cmd == nullptr){
+        std::cout << "not find commnd >> " << m_vec_commands[0] << std::endl;
+        return;
+    }
+
+    std::cout << "find command >> " << m_vec_commands[0] << std::endl;
+
+    if(m_vec_commands[0] == "-table"){
+        if(!(this->*(cmd->method))(m_vec_commands)){
+        std::cout << "command not run: " << m_vec_commands[0] << std::endl;
+        }
+        return;
+    }
+
+    //для продолжения игры
+    if(!(this->*(cmd->method))(m_vec_commands)){
+    std::cout << "command not run: " << m_vec_commands[0] << std::endl;
+    }
+}
+
 bool User_game::set_difficulty_game(){
     int koef_temp{-1};
 
@@ -279,7 +313,7 @@ bool User_game::init_command(){
     std::pair<std::string, bool (User_game::*)(std::vector<std::string>&)>command_init[] = 
     {
       {"-max",   &User_game::executeDifficultyGameCommand}
-    // , {"-table", &User_game::executeTableCommand}
+    , {"-table", &User_game::executeTableCommand}
     , {"-level", &User_game::executeDifficultyLevelCommand}
     };
 

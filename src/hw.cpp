@@ -5,16 +5,14 @@ int main(int argc, char* argv[]){
 
     std::vector<std::string> argv_v;
 
-    std::cout << "Count " << argc << std::endl;
-    
     for(size_t i = 1; i < argc; i++){
         std::string temp = argv[i];
-        std::cout << "value >> " << temp << std::endl; 
+        argv_v.push_back(temp);
     }
 
 
     User_game game;
-    game.start();
+    game.start(argv_v);
 
     return 0;
 }

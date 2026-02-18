@@ -15,7 +15,7 @@ class User_game;
 
 struct Command{
     std::string name;
-    bool (User_game::*method)(std::vector<std::string>&);
+    bool (User_game::*method)(std::vector<std::string>& args_vec);
 };
 
 class User_game{
@@ -32,9 +32,11 @@ class User_game{
         std::vector<std::pair<std::string, int>> m_result;  // подготовленный контейнер с результатами
 
         std::vector<Command> m_commnds;                     // команды (для работы с ком строки)
+        std::vector<std::string> m_vec_commands;            // вектор команд из ком строки
 
     public:
         void start();
+        void start(std::vector<std::string>& commands);
 
     private:
         bool set_difficulty_game();
