@@ -66,14 +66,6 @@ void User_game::start(std::vector<std::string>& command){
 
     std::cout << "find command >> " << m_vec_commands[0] << std::endl;
 
-    if(m_vec_commands[0] == "-table"){
-        if(!(this->*(cmd->method))(m_vec_commands)){
-        std::cout << "command not run: " << m_vec_commands[0] << std::endl;
-        }
-        return;
-    }
-
-    //для продолжения игры
     if(!(this->*(cmd->method))(m_vec_commands)){
     std::cout << "command not run: " << m_vec_commands[0] << std::endl;
     }
@@ -350,12 +342,13 @@ bool User_game::executeDifficultyGameCommand(std::vector<std::string>& command){
         return false;
     }
 
-    if(command.size() < 3){
+    if(command.size() < 2){
         std::cout << "[User_game::executeDifficultyGameCommand] Error: container(vector) is bad size < 3." << std::endl;
         return false;
     }
     
-    std::string str_num = command[2];
+    std::string str_num = command[1];
+    // std::cout << "1 - " << command[0] << " 2 - " << command[1] << std::endl;
 
     if(str_num.empty()){
         std::cout << "[User_game::executeDifficultyGameCommand] Error: str_num is nullptr." << std::endl;
@@ -363,6 +356,7 @@ bool User_game::executeDifficultyGameCommand(std::vector<std::string>& command){
     }
 
     int num = std::stoi(str_num);
+    // std::cout << " number >> "<< num << std::endl;
 
     if(num <= 0 || num > 1000){
         std::cout << "[User_game::executeDifficultyGameCommand] Error: str_num is out of range." << std::endl;
@@ -370,6 +364,47 @@ bool User_game::executeDifficultyGameCommand(std::vector<std::string>& command){
     }
 
     m_kf = num;
+
+    std::cout << "Hi! Enter your name, please: ";
+    set_name_user();
+    std::cout << std::endl;
+
+    // std::cout << "Enter koeff diferend >> ";
+    // if(!set_difficulty_game()){
+    //     std::cout << "koeff [100]" << std::endl;
+    // }
+
+    if(!set_random()){
+        std::cout << "can't random " << std::endl;
+        return false;
+    }
+
+    game();
+
+    if(!save_scores()){
+        std::cout << "Error, can't save to file." << std::endl;
+    }
+
+    if(!read_scores()){
+        std::cout << "Error, can't read file." << std::endl;
+        return false;
+    }
+
+
+    if(!read_lines(m_read_line)){
+        std::cout << "Error, can't read lines." << std::endl;
+        return false;
+    }
+
+    m_result = set_high_scores_container(m_words);
+
+    if(m_result.empty()){
+        std::cout << "Container result is empty." << std::endl;
+    }
+    
+    if(!m_result.empty()){
+        view_result();
+    }
 
     return true;
 }
@@ -415,12 +450,12 @@ bool User_game::executeDifficultyLevelCommand(std::vector<std::string>& command)
         return false;
     }
 
-    if(command.size() < 3){
+    if(command.size() < 2){
         std::cout << "[User_game::executeDifficultyLevelCommand] Error: container(vector) is bad size < 3." << std::endl;
         return false;
     }
     
-    std::string str_num = command[2];
+    std::string str_num = command[1];
 
     if(str_num.empty()){
         std::cout << "[User_game::executeDifficultyLevelCommand] Error: str_num is nullptr." << std::endl;
@@ -445,6 +480,44 @@ bool User_game::executeDifficultyLevelCommand(std::vector<std::string>& command)
             m_kf = 1000;
             break;
     }
+
+    std::cout << "Hi! Enter your name, please: ";
+    set_name_user();
+    std::cout << std::endl;
+
+    if(!set_random()){
+        std::cout << "can't random " << std::endl;
+        return false;
+    }
+
+    game();
+
+    if(!save_scores()){
+        std::cout << "Error, can't save to file." << std::endl;
+    }
+
+    if(!read_scores()){
+        std::cout << "Error, can't read file." << std::endl;
+        return false;
+    }
+
+
+    if(!read_lines(m_read_line)){
+        std::cout << "Error, can't read lines." << std::endl;
+        return false;
+    }
+
+
+    m_result = set_high_scores_container(m_words);
+
+    if(m_result.empty()){
+        std::cout << "Container result is empty." << std::endl;
+    }
+    
+    if(!m_result.empty()){
+        view_result();
+    }
+    
 
     return true;
 }        
