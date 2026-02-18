@@ -279,7 +279,7 @@ bool User_game::init_command(){
     std::pair<std::string, bool (User_game::*)(std::vector<std::string>&)>command_init[] = 
     {
       {"-max",   &User_game::executeDifficultyGameCommand}
-    , {"-table", &User_game::executeTableCommand}
+    // , {"-table", &User_game::executeTableCommand}
     , {"-level", &User_game::executeDifficultyLevelCommand}
     };
 
@@ -350,13 +350,13 @@ bool User_game::executeTableCommand(std::vector<std::string>& command){
    
         if(!read_scores()){
         std::cout << "[User_game::executeTableCommand] Error, can't read file." << std::endl;
-        return;
+        return false;
     }
 
 
     if(!read_lines(m_read_line)){
         std::cout << "[User_game::executeTableCommand] Error, can't read lines." << std::endl;
-        return;
+        return false;
     }
 
     m_result = set_high_scores_container(m_words);
