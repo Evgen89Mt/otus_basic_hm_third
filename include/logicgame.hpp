@@ -10,22 +10,28 @@
 
 #include <cctype>
 
+enum difficulty{
+     ZERO
+    ,LEVEL1
+    ,LEVEL2
+    ,LEVEL3
+};
+
 class LogicGame{
     private:
-        std::string m_name{"noname"};
+        std::string m_name{""};
         int m_count{-1};
         int m_kf_diffuctly{100};
         int m_value_random{-1};
 
     public:
-        // void start();
-        void start(std::vector<std::string>& argv);
+        void start(const int kf);
 
         const std::string get_name() const;
         int get_count() const;
-        bool set_name_user();
-        bool set_diffuctly_user();
-        bool set_diffuctly(const int dif);
+        void set_name_user();
+        bool set_difficulty_user();
+        bool set_difficulty(const int dif);
 
     private:
         bool random();

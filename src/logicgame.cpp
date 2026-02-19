@@ -1,28 +1,77 @@
  #include "logicgame.hpp"
         
-// void LogicGame::start(){
-// }
 
-void LogicGame::start(std::vector<std::string>& argv){
+void LogicGame::start(const int kf = 0){
 
+    std::cout << "___________start____game____________"<< std::endl;
+    std::cout << "Hi! Enter your name, please: ";
+    set_name_user();
+
+    switch (kf)
+    {
+    case difficulty::ZERO:
+        if(set_difficulty_user()){
+            std::cout << "koeff [100]" << std::endl;
+        }
+        break;
+    case difficulty::LEVEL1:
+        if(set_difficulty(10)){
+            std::cout << "koeff [100]" << std::endl;
+        }
+        break;
+    case difficulty::LEVEL2:
+        if(set_difficulty(100)){
+            std::cout << "koeff [100]" << std::endl;
+        }
+        break;
+    case difficulty::LEVEL3:
+        if(set_difficulty(1000)){
+            std::cout << "koeff [100]" << std::endl;
+        }
+        break;
+    default:
+        if(set_difficulty(kf)){
+            std::cout << "koeff [" << kf <<"]" << std::endl;
+        }
+        break;
+    }
+
+    if(random()){
+        std::cout << "can't random " << std::endl;
+        return;
+    }
+
+    if(game()){
+        std::cout << "can't game " << std::endl;
+        return;
+    }
 }
 
 const std::string LogicGame::get_name() const{
     return m_name;
 }
+
 int LogicGame::get_count() const{
     return m_count;
 }
-bool LogicGame::set_name_user(){
+
+void LogicGame::set_name_user(){
     std::cout << std::endl;
     std::cin >> m_name;
+
+    for(;m_name == "";){
+        std::cout << std::endl << "again enter name: ";
+        std::cin >> m_name;
+    }
+
+    std::cout << std::endl;
 }
-bool LogicGame::set_diffuctly_user(){
+
+bool LogicGame::set_difficulty_user(){
+
     int koef_temp{-1};
 
-    std::cout << "Enter kf dyffuctly: ";
-
-    for(;!(cin >> koef_temp) || koef_temp < 10 || koef_temp > 1000;){
+    for(;!(std::cin >> koef_temp) || koef_temp < 10 || koef_temp > 1000;){
         
         if(std::cin.eof()){
             return false;
@@ -30,10 +79,9 @@ bool LogicGame::set_diffuctly_user(){
 
         std::cin.clear();
         std::cin.ignore(10000, '\n');
-        std::cout << std::endl << "again enter: ";
+        std::cout << std::endl << "again enter kf: ";
     }
-    std::endl;
-    // std::cin >> koef_temp;
+    std::cout << std::endl;
     // for(;koef_temp <= 10 || koef_temp > 1000;){
     //     std::cout << "again enter koef >> ";
     //     std::cin >> koef_temp;
@@ -45,20 +93,32 @@ bool LogicGame::set_diffuctly_user(){
     return true;
 }
 
-bool LogicGame::set_diffuctly(const int dif){
+bool LogicGame::set_difficulty(const int dif){
+    if(dif < 10 || dif > 1000){
+        std::cout << "[LogicGame::set_difficulty]Error: set_difficulty." << std::endl;
+        return false;
+    }
 
+    m_kf_diffuctly = dif;
+
+    return true;
 }
 
-
 bool LogicGame::random(){
+
+    if(m_kf_diffuctly == 0){
+        std::cout << "Error: koeff is zero." << std::endl;
+        return false;
+    }
+
     std::srand(std::time(nullptr));
     m_value_random = std::rand()% m_kf_diffuctly;
 
     return true;
 }
 
-
 bool LogicGame::game(){
+
     size_t count{0};
 	int current_value = 0;
 	bool not_win = true;
@@ -66,8 +126,18 @@ bool LogicGame::game(){
 	std::cout << "Enter your guess:" << std::endl;
 
 	do {
-		std::cin >> current_value;
-        // валидация!!!! Проверка на число если нет очистка
+
+        for(;!(std::cin >> current_value);){
+        
+        if(std::cin.eof()){
+            return false;
+        }
+
+        std::cin.clear();
+        std::cin.ignore(10000, '\n');
+        std::cout << std::endl << "again enter guess: ";
+    }
+        
 
 		if (current_value < m_value_random) {
 			std::cout << "less than " << current_value << std::endl;

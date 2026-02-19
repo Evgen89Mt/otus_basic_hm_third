@@ -27,7 +27,6 @@ class Scores{
         void view_scores();
 
     private:
-
         bool read_lines(std::vector<std::string>& lines);
 };
 
