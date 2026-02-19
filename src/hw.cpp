@@ -1,6 +1,8 @@
 // #include "wr_file.h"
 #include "user_game.h"
 
+#include "managergame.hpp"
+
 int main(int argc, char* argv[]){
 
     std::vector<std::string> argv_v;
@@ -11,8 +13,13 @@ int main(int argc, char* argv[]){
     }
 
 
-    User_game game;
-    game.start(argv_v);
+    //version 1
+    // User_game game;
+    // game.start(argv_v);
+
+    //version 2
+    ManagerGame game;
+    
 
     return 0;
 }

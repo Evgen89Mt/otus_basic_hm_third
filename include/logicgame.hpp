@@ -1,8 +1,14 @@
 #ifndef LOGICGAME_HPP
 #define LOGICGAME_HPP
 
+#include <iostream>
 #include <string>
 #include <vector>
+
+#include <cstdlib>
+#include <ctime>
+
+#include <cctype>
 
 class LogicGame{
     private:
@@ -12,17 +18,19 @@ class LogicGame{
         int m_value_random{-1};
 
     public:
-        void start();
+        // void start();
         void start(std::vector<std::string>& argv);
 
-        std::string get_name();
-        int get_count();
+        const std::string get_name() const;
+        int get_count() const;
+        bool set_name_user();
+        bool set_diffuctly_user();
+        bool set_diffuctly(const int dif);
 
     private:
-        bool set_name();
-        bool set_diffuctly();
-        bool set_random();
+        bool random();
         bool game();
+
 };
 
 #endif

@@ -18,15 +18,17 @@ class Scores{
     
     public:
         bool set_name(const std::string& name);
-        bool set_count(const int count);
+        bool set_count(int count);
 
-    private:
         bool save_scores();
         bool read_scores();
-        bool read_lines(std::vector<std::string>& lines);
+        
         void view_result();
         void view_scores();
 
+    private:
+
+        bool read_lines(std::vector<std::string>& lines);
 };
 
 #endif
