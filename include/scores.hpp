@@ -4,12 +4,17 @@
 #include <string>
 #include <vector>
 
+#include "parsing.hpp"
+#include "wr_file.h"
+
 
 class Scores{
     private:
+        Parsing m_parsing;
+        WriteReadFile m_wr;
+
         std::string m_name{"noname"};
         int m_count{-1};
-
         std::string m_name_file{"high_scores.txt"};
 
         std::vector<std::string> m_read_line;               // строки
@@ -18,7 +23,7 @@ class Scores{
     
     public:
         bool set_name(const std::string& name);
-        bool set_count(int count);
+        bool set_count(const int count);
 
         bool save_scores();
         bool read_scores();
@@ -27,7 +32,7 @@ class Scores{
         void view_scores();
 
     private:
-        bool read_lines(std::vector<std::string>& lines);
+        bool read_results_to_container(std::vector<std::string>& lines);
 };
 
 #endif

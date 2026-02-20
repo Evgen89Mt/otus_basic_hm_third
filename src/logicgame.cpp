@@ -3,35 +3,35 @@
 
 void LogicGame::start(const int kf = 0){
 
-    std::cout << "___________start____game____________"<< std::endl;
+    std::cout << "_____________start____game____________"<< std::endl;
     std::cout << "Hi! Enter your name, please: ";
     set_name_user();
 
     switch (kf)
     {
-    case difficulty::ZERO:
-        if(set_difficulty_user()){
+    case ZERO:
+        if(!set_difficulty_user()){
             std::cout << "koeff [100]" << std::endl;
         }
         break;
-    case difficulty::LEVEL1:
-        if(set_difficulty(10)){
+    case LEVEL1:
+        if(!set_difficulty(10)){
             std::cout << "koeff [100]" << std::endl;
         }
         break;
-    case difficulty::LEVEL2:
-        if(set_difficulty(100)){
+    case LEVEL2:
+        if(!set_difficulty(100)){
             std::cout << "koeff [100]" << std::endl;
         }
         break;
-    case difficulty::LEVEL3:
-        if(set_difficulty(1000)){
+    case LEVEL3:
+        if(!set_difficulty(1000)){
             std::cout << "koeff [100]" << std::endl;
         }
         break;
     default:
-        if(set_difficulty(kf)){
-            std::cout << "koeff [" << kf <<"]" << std::endl;
+        if(!set_difficulty(kf)){
+            std::cout << "koeff [100]" << std::endl;
         }
         break;
     }
@@ -51,7 +51,7 @@ const std::string LogicGame::get_name() const{
     return m_name;
 }
 
-int LogicGame::get_count() const{
+const int LogicGame::get_count() const{
     return m_count;
 }
 

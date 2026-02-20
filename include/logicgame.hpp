@@ -10,7 +10,7 @@
 
 #include <cctype>
 
-enum difficulty{
+enum {
      ZERO
     ,LEVEL1
     ,LEVEL2
@@ -28,7 +28,7 @@ class LogicGame{
         void start(const int kf);
 
         const std::string get_name() const;
-        int get_count() const;
+        const int get_count() const;
         void set_name_user();
         bool set_difficulty_user();
         bool set_difficulty(const int dif);
