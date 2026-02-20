@@ -4,6 +4,8 @@
 иерархия папок проекта
 
 ```
+Variant 1
+
 CMakeLists.txt
 src/
     CMakelists.txt
@@ -11,6 +13,34 @@ src/
     hw.cpp  //main
 include/
     user_game.h
+lib/
+    wr_file/
+        CMakeLists.txt
+        include/
+            wr_file.h
+        src/
+            wr_file.cpp
+
+----------------------
+Variant 2
+
+CMakeLists.txt
+src/
+    CMakelists.txt
+
+    logicgame.cpp  
+    managergame.cpp  
+    parsing.cpp  
+    scores.cpp
+
+    hw.cpp  //main
+
+include/
+    logicgame.hpp  
+    managergame.hpp  
+    parsing.hpp  
+    scores.hp
+
 lib/
     wr_file/
         CMakeLists.txt
@@ -32,13 +62,18 @@ Version 2
 ---------------
 1. Новая логика проекта
 Класс:
--  LogicGame логика (хранения имени рекорда и их методы)
--  Parsing парсинг строки
--  Scores таблица результатов (работа с файлом и массив рекордов)
--  ManagerGame - объединения всех классов общая работа
+-  LogicGame логика (хранения имени рекорда и механика игры)             - completed
+-  Parsing парсинг строк                                                 - completed
+-  Scores таблица результатов (работа с файлом и массив рекордов)        - completed
+-  ManagerGame - объединения всех классов общая работа...                - TODO!(checking 1)
+В работе:
+   ManagerGame - нужно переработать упростить обрабочик коммант (без указателей на метод выполнить)
 
-
-2. Выполнить проверку на число при вводе.
+2. Выполнить проверку на число при вводе.                                - completed
    
+3. Добавить проверки, если следующее в строке идёт число, то это строчка. - completed
+---------------
+К чему ещё не приступал:
 
-3. Добавить проверки, если следующее в строке идёт число, то это строчка.
+1. Фильтр на топ игроков и результатов;
+2. Перезаписывать результат, если он лучше предыдущего, если его нет, то просто запись.
