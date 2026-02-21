@@ -9,7 +9,6 @@ std::vector<std::pair<std::string, int>> Parsing::get_scores_container() const{
     return m_result;
 }
 
-// Доработал проверку, теперь имя может иметь цифры
 bool Parsing::set_high_scores_container(std::vector<std::string>& lines){
 
     if(lines.empty()){
@@ -47,22 +46,20 @@ bool Parsing::set_high_scores_container(std::vector<std::string>& lines){
         int num{-1};
         
         if(!isDijit(*it)){
-            continue;
-        }
-
-        num = std::stoi(*it);
-        
-        if(num > 0){
-            count += *it;
+            // std::cout << "name >> " << *it << std::endl;
+            name += *it;
         }
         else{
-            name += *it;
+            num = std::stoi(*it);
+            // std::cout << "num >> " << *it << std::endl;
+            count += *it;
         }
         
         if(!name.empty() && !count.empty()){
         
             temp_pair.first = name;
             temp_pair.second = std::stoi(count);
+
         
             temp_vec.push_back(temp_pair);
         
@@ -82,7 +79,7 @@ bool Parsing::set_high_scores_container(std::vector<std::string>& lines){
     return true;
 }
 
-std::vector<std::string> Parsing::parsingLine(std::string& lines, char split_token = ' '){
+std::vector<std::string> Parsing::parsingLine(std::string& lines, char split_token){
     if(lines.empty()){
         std::cout << "[Parsing::parsingLine]Error: container (vector) lines is empty." << std::endl;
         return std::vector<std::string>{}; 
@@ -102,6 +99,10 @@ std::vector<std::string> Parsing::parsingLine(std::string& lines, char split_tok
 
         if(!str_temp.empty()){
             temp.push_back(str_temp);
+        }
+
+        if(it == lines.end()){
+            break;
         }
     }
     return temp;

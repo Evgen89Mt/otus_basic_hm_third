@@ -1,6 +1,9 @@
 add_executable(${PROJECT_NAME}
     hw.cpp
-    user_game.cpp
+    logicgame.cpp  
+    managergame.cpp  
+    parsing.cpp  
+    scores.cpp 
 )
 
 message("!!!(src) CMAKE_SOURCE_DIR >> " ${CMAKE_SOURCE_DIR})

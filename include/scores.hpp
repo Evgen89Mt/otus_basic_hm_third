@@ -17,9 +17,9 @@ class Scores{
         int m_count{-1};
         std::string m_name_file{"high_scores.txt"};
 
-        std::vector<std::string> m_read_line;               // строки
-        std::vector<std::string> m_words;                   // слова
-        std::vector<std::pair<std::string, int>> m_result;  // контейнер
+        std::vector<std::string> m_read_line;               
+        std::vector<std::pair<std::string, int>> m_result;
+        std::vector<std::pair<std::string, int>> m_result_top;  
     
     public:
         bool set_name(const std::string& name);
@@ -29,10 +29,14 @@ class Scores{
         bool read_scores();
         
         void view_result();
+
         void view_scores();
 
+        void view_scores_top();
+
     private:
-        bool read_results_to_container(std::vector<std::string>& lines);
+        bool read_results_to_container();
+        bool sort_container_top();
 };
 
 #endif

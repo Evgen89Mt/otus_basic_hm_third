@@ -55,7 +55,7 @@ bool WriteReadFile::readFromFile_user(std::string& file, std::vector<std::string
         return false;
     }
 
-    std::cout << "!! read from file." << std::endl;
+    // std::cout << "!! read from file." << std::endl;
     
     return true;
 }

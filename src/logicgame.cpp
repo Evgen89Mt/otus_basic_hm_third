@@ -10,9 +10,11 @@ void LogicGame::start(const int kf = 0){
     switch (kf)
     {
     case ZERO:
+        std::cout << "Enter koeff diferend >> ";
         if(!set_difficulty_user()){
             std::cout << "koeff [100]" << std::endl;
         }
+        std::cout << std::endl;
         break;
     case LEVEL1:
         if(!set_difficulty(10)){
@@ -36,12 +38,12 @@ void LogicGame::start(const int kf = 0){
         break;
     }
 
-    if(random()){
+    if(!random()){
         std::cout << "can't random " << std::endl;
         return;
     }
 
-    if(game()){
+    if(!game()){
         std::cout << "can't game " << std::endl;
         return;
     }
